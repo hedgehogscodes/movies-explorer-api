@@ -31,32 +31,29 @@ module.exports.createUser = (req, res, next) => {
     })
     .catch((err) => {
       if (err.code === 11000) {
-        next(new UniqueError(ERROR_MESSAGES.uniqueError.messageUniqueMail));
-      } else if (err.name === 'ValidationError') {
-        next(
-          new BadRequestError(ERROR_MESSAGES.badRequest.messageValidate),
-        );
-      } else {
-        next(err);
-      }
+        return next(new UniqueError(ERROR_MESSAGES.uniqueError.messageUniqueMail));
+      } 
+
+      if (err.name === 'ValidationError') {
+        return next( new BadRequestError(ERROR_MESSAGES.badRequest.messageValidate), );
+      } 
+
+      return next(err);
     });
 };
 
 module.exports.getUser = (req, res, next) => {
   User.findById(req.user._id)
+    .orFail(new NotFoundError(ERROR_MESSAGES.notFound.messageUser))
     .then((user) => {
-      if (!user) {
-        throw new NotFoundError(ERROR_MESSAGES.notFound.messageUser);
-      } else {
-        res.send(user);
-      }
+      res.send(user);
     })
     .catch((err) => {
       if (err.kind === 'ObjectId') {
-        next(new UnauthError(ERROR_MESSAGES.unauthError.messageObjectId));
-      } else {
-        next(err);
-      }
+        return next(new UnauthError(ERROR_MESSAGES.unauthError.messageObjectId));
+      } 
+      
+      return next(err);
     });
 };
 
