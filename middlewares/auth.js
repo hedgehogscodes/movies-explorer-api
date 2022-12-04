@@ -8,7 +8,7 @@ const extractBearerToken = (header) => header.replace('Bearer ', '');
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
   if (!authorization || !authorization.startsWith('Bearer ')) {
-    return next(new UnauthError(ERROR_MESSAGES.unauthError.message));
+    return next(new UnauthError(ERROR_MESSAGES.unauthError.messageAuth));
   }
 
   const token = extractBearerToken(authorization);
