@@ -6,6 +6,7 @@ const ERROR_MESSAGES = {
     messageAuth: 'Необходимо авторизироваться',
     messageFail: 'Авторизация не пройдена!',
     messageObjectId: 'Неверно введен id',
+    messagePassOrLogin: 'Неправильные почта или пароль',
   },
   badRequest: {
     messageValidate: 'Ошибка валидации. Введены некорректные данные',

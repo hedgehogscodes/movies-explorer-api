@@ -32,11 +32,11 @@ module.exports.createUser = (req, res, next) => {
     .catch((err) => {
       if (err.code === 11000) {
         return next(new UniqueError(ERROR_MESSAGES.uniqueError.messageUniqueMail));
-      } 
+      }
 
       if (err.name === 'ValidationError') {
-        return next( new BadRequestError(ERROR_MESSAGES.badRequest.messageValidate), );
-      } 
+        return next(new BadRequestError(ERROR_MESSAGES.badRequest.messageValidate));
+      }
 
       return next(err);
     });
@@ -51,8 +51,8 @@ module.exports.getUser = (req, res, next) => {
     .catch((err) => {
       if (err.kind === 'ObjectId') {
         return next(new UnauthError(ERROR_MESSAGES.unauthError.messageObjectId));
-      } 
-      
+      }
+
       return next(err);
     });
 };
