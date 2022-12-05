@@ -1,5 +1,5 @@
 const { celebrate, Joi } = require('celebrate');
-const REGEX_URL = require('./regexps');
+const { isURL } = require('validator');
 
 module.exports.validateLogin = celebrate({
   body: Joi.object().keys({
@@ -30,9 +30,36 @@ module.exports.validateCreateMovie = celebrate({
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required().regex(REGEX_URL),
-    trailerLink: Joi.string().required().regex(REGEX_URL),
-    thumbnail: Joi.string().required().regex(REGEX_URL),
+    image: Joi
+      .string()
+      .required()
+      .custom((value, helpers) => {
+        if (isURL(value, { require_protocol: true })) {
+          return value;
+        }
+
+        return helpers.error('Передан некорректный URL-адрес');
+      }),
+    trailerLink: Joi
+      .string()
+      .required()
+      .custom((value, helpers) => {
+        if (isURL(value, { require_protocol: true })) {
+          return value;
+        }
+
+        return helpers.error('Передан некорректный URL-адрес');
+      }),
+    thumbnail: Joi
+      .string()
+      .required()
+      .custom((value, helpers) => {
+        if (isURL(value, { require_protocol: true })) {
+          return value;
+        }
+
+        return helpers.error('Передан некорректный URL-адрес');
+      }),
     movieId: Joi.number().required(),
     nameRU: Joi.string().required(),
     nameEN: Joi.string().required(),
