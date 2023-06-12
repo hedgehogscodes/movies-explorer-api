@@ -25,7 +25,7 @@ module.exports.createMovie = (req, res, next) => {
     thumbnail,
     movieId,
   } = req.body;
-
+  console.log(req.body);
   Movie.create({
     country,
     director,
@@ -42,6 +42,7 @@ module.exports.createMovie = (req, res, next) => {
   })
     .then((movie) => res.send(movie))
     .catch((err) => {
+      console.log(err);
       if (err.name === 'ValidationError') {
         return next(new BadRequestError(ERROR_MESSAGES.badRequest.messageValidate));
       }

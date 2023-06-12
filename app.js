@@ -15,11 +15,10 @@ const { MONGO_URL = MONGO_DEV_URL, PORT = 3000 } = process.env;
 
 const app = express();
 
-mongoose.connect(MONGO_URL, {
+mongoose.connect( MONGO_URL, {
   useNewUrlParser: true,
   useCreateIndex: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 app.use(express.json());
